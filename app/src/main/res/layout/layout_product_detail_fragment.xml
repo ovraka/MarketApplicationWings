@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_template" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintBottom_toTopOf="@id/buyButton"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageProduct"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/picture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/product_name"
+                android:textColor="@color/black"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageProduct" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textPrice"
+                style="@style/productDetailTextStyle"
+                android:text="@string/price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productName" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productPrice"
+                style="@style/productDetailTextStyle"
+                android:text="@string/rp_15_000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productName" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textDimension"
+                style="@style/productDetailTextStyle"
+                android:layout_marginTop="20dp"
+                android:text="@string/dimension"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textPrice" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productDimension"
+                style="@style/productDetailTextStyle"
+                android:text="@string/_13_cm_x_10_cm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productPrice" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/priceUnit"
+                style="@style/productDetailTextStyle"
+                android:text="@string/price_unit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textDimension" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productUnit"
+                style="@style/productDetailTextStyle"
+                android:text="@string/pcs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productDimension" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buyButton"
+            android:layout_width="220dp"
+            app:cornerRadius="25dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/sky_blue"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/buy"
+            android:layout_height="60dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

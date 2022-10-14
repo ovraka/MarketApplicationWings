@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MarketApplicationWings</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="register">Register</string>
+    <string name="checkout">Checkout</string>
+    <string name="market_application">Market Application</string>
+    <string name="rp_15_000">Rp. 15.000,-</string>
+    <string name="rp_13_500">Rp. 13.500,-</string>
+    <string name="buy">BUY</string>
+    <string name="price">Price</string>
+    <string name="_13_cm_x_10_cm">13 cm X 10 cm</string>
+    <string name="dimension">Dimension</string>
+    <string name="price_unit">Price Unit</string>
+    <string name="product_name">Product Name</string>
+    <string name="pcs">PCS</string>
+    <string name="total">Total:</string>
+    <string name="_1">1</string>
+    <string name="sub_total">Sub Total :</string>
+    <string name="confirm">Confirm</string>
+</resources>
