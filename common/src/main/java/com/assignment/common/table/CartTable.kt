@@ -25,5 +25,10 @@ class CartTable (
     @field:ColumnInfo(name = "unit")
     val unit: String,
     @field:ColumnInfo(name = "user")
-    val user: String
-)
+    val user: String,
+    @field:ColumnInfo(name ="quantity")
+    var quantity: Int
+
+) {
+
+}

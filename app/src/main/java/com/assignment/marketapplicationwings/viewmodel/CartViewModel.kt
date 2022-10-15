@@ -19,6 +19,7 @@ class CartViewModel @Inject constructor(
     val cartRepository: CartRepository
 ) : BaseViewModel(application) {
     var cartData: LiveData<List<CartTable>>? = null
+    val subTotal= hashMapOf<String,CartTable>()
 
     init {
         getCart()

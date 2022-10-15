@@ -6,12 +6,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.assignment.common.ext.Count
 import com.assignment.common.table.CartTable
 import com.assignment.marketapplicationwings.databinding.LayoutCheckoutItemBinding
 import java.text.NumberFormat
 import java.util.*
 
-class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+class CartAdapter(val setTotalPrice: (CartTable) -> Unit) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     val differ = AsyncListDiffer(this, itemCallback)
 
@@ -19,22 +20,30 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CartTable) {
             binding.data = data
-
+            binding.remove.isEnabled = false
             binding.itemQuantity.setText("1")
             val locale = Locale("in", "ID")
             val currency = NumberFormat.getCurrencyInstance(locale)
-
-            binding.price.addTextChangedListener {
+            binding.subTotal.text = currency.format(Count.getSubTotal(data))
+            binding.itemQuantity.addTextChangedListener {
                 val totalPrice = if (!it.isNullOrBlank()) {
-                    (Integer.valueOf(it.toString())) * data.price - (data.price * data.discount / 100)
+                    data.quantity = it.toString().toInt()
+                    Count.getSubTotal(data)
                 } else {
                     0.0
                 }
-                if (it.isNullOrBlank() == it?.equals("0")) {
-                    binding.itemQuantity.setText("1")
-                } else {
-                    binding.price.text = currency.format(totalPrice)
-                }
+                binding.remove.isEnabled = it.toString().toInt() > 1
+                binding.subTotal.text = currency.format(totalPrice)
+                setTotalPrice(data)
+            }
+            binding.add.setOnClickListener {
+                data.quantity += 1
+                binding.itemQuantity.setText(data.quantity.toString())
+            }
+            binding.remove.setOnClickListener {
+                data.quantity -= 1
+                binding.itemQuantity.setText(data.quantity.toString())
+
             }
         }
     }

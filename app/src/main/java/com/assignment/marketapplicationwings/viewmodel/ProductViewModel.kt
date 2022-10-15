@@ -57,7 +57,8 @@ class ProductViewModel @Inject constructor(
                 discount = content.discount,
                 dimension = content.dimension,
                 unit = content.unit,
-                user = user
+                user = user,
+                quantity = 1
             )
         )
     }

@@ -36,7 +36,7 @@ class LoginFragment : BaseFragment<LoginViewModel, LayoutLoginFragmentBinding>()
                     Toast.makeText(this.context, "Please wait", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    Toast.makeText(this.context, "Invalid username or password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "Cannot connect because not same port", Toast.LENGTH_SHORT).show()
                 }
             }
         }
