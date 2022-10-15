@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,7 +20,9 @@ class DataStorePreference @Inject constructor(@ApplicationContext val context: C
     private val dataStore: DataStore<Preferences> = context.dataStore
 
     private val TOKEN = stringPreferencesKey("token")
-    private val USERNAME = stringPreferencesKey("username")
+    private val USER = stringPreferencesKey("user")
+
+    //Token data
 
     fun getToken(): Flow<String> {
         return dataStore.data.map { preferences ->
@@ -27,10 +30,8 @@ class DataStorePreference @Inject constructor(@ApplicationContext val context: C
         }
     }
 
-    fun getUsername(): Flow<String> {
-        return dataStore.data.map { preferences ->
-            preferences[USERNAME] ?: ""
-        }
+    suspend fun getTokenString(): String {
+        return dataStore.data.first()[TOKEN].orEmpty()
     }
 
     suspend fun saveToken(token: String) {
@@ -39,9 +40,21 @@ class DataStorePreference @Inject constructor(@ApplicationContext val context: C
         }
     }
 
+    //User data
+
+    fun getUsername(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[USER] ?: ""
+        }
+    }
+
+    suspend fun getUserString(): String {
+        return dataStore.data.first()[USER].orEmpty()
+    }
+
     suspend fun saveUsername(username: String) {
         dataStore.edit { preferences ->
-            preferences[USERNAME] = username
+            preferences[USER] = username
         }
     }
 }

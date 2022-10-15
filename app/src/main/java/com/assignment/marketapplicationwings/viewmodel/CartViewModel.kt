@@ -18,7 +18,7 @@ class CartViewModel @Inject constructor(
     val dataStorePreference: DataStorePreference,
     val cartRepository: CartRepository
 ) : BaseViewModel(application) {
-    var cartState: LiveData<List<CartTable>>? = null
+    var cartData: LiveData<List<CartTable>>? = null
 
     init {
         getCart()
@@ -27,8 +27,12 @@ class CartViewModel @Inject constructor(
     fun getCart() {
         viewModelScope.launch {
             dataStorePreference.getUsername().collect {
-                cartState = cartRepository.getAllCart(it)
+                cartData = cartRepository.getAllCart(it)
             }
         }
+    }
+
+    fun deleteCart(){
+        cartRepository.deleteCart()
     }
 }

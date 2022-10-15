@@ -12,13 +12,19 @@ class CartRepository(
     private val appExecutors: AppExecutors
 ) {
 
-    fun getAllCart(username: String): LiveData<List<CartTable>> = cartDAO.getAllCart(username)
+    fun getAllCart(user:String): LiveData<List<CartTable>> {
+        val cartData = cartDAO.getCart(user)
 
-    fun insertProduct(cart: CartTable) {
+        return cartData
+    }
+
+    fun insertCart(cart: CartTable) {
         appExecutors.diskIO.execute {
             cartDAO.insertCart(cart)
         }
     }
 
-    fun isProductOnCart(id: Int, username: String): LiveData<Boolean> = cartDAO.isProductOnCart(id, username)
+    fun deleteCart(){
+        cartDAO.deleteCart()
+    }
 }

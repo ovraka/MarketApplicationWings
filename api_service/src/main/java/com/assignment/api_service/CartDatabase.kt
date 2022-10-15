@@ -14,8 +14,11 @@ abstract class CartDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var instance: CartDatabase? = null
-        fun getInstance(context: Context): CartDatabase = instance ?: Room.databaseBuilder(
-            context.applicationContext, CartDatabase::class.java, "Cart.db"
-        ).build()
+        fun getInstance(context: Context): CartDatabase =
+            instance ?: synchronized(this) {
+                instance ?: Room.databaseBuilder(
+                    context.applicationContext, CartDatabase::class.java, "Cart.db"
+                ).allowMainThreadQueries().build()
+            }
     }
 }

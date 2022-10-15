@@ -1,7 +1,6 @@
 package com.assignment.marketapplicationwings.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.assignment.api_service.DataStorePreference
@@ -26,43 +25,62 @@ class ProductViewModel @Inject constructor(
 ) : BaseViewModel(application) {
     val productData = MutableLiveData<AppResponse<ProductResponse>>()
     val tokenData = MutableLiveData<String>()
-    var insertCart: LiveData<Boolean>? = null
+    val userData = MutableLiveData<String>()
 
     init {
         viewModelScope.launch {
-            dataStorePreference.getToken().collect{
-                tokenData.value = it
-            }
+            tokenData.postValue(dataStorePreference.getTokenString())
+            userData.postValue(dataStorePreference.getUserString())
         }
     }
 
     fun getAllProduct(token: String) {
-        viewModelScope.launch {
-            productUseCase.invoke(token).collect {
-                productData.postValue(it)
+        if (productData.value == null) {
+            viewModelScope.launch {
+                productUseCase.invoke(token).collect {
+                    productData.postValue(it)
+                }
             }
+        } else {
+            productData.postValue(productData.value)
         }
     }
 
-    fun fetchProduct(id: Int, username: String) {
-        insertCart = cartRepository.isProductOnCart(id, username)
-    }
-
-    fun insertToCart(username: String, content: Content) {
-        viewModelScope.launch {
-            cartRepository.insertProduct(
-                CartTable(
-                    content.productCode,
-                    content.name,
-                    content.price,
-                    content.currency,
-                    content.discount,
-                    content.dimension,
-                    content.unit,
-                    username,
-                    "Pending"
-                )
+    fun insertIntoCart(user: String, content: Content) {
+        cartRepository.insertCart(
+            CartTable(
+                id = 0,
+                productCode = content.productCode,
+                name = content.name,
+                price = content.price,
+                currency = content.currency,
+                discount = content.discount,
+                dimension = content.dimension,
+                unit = content.unit,
+                user = user
             )
-        }
+        )
     }
+
+//    fun fetchProduct(id: Int, username: String) {
+//        insertCart = cartRepository.isProductOnCart(id, username)
+//    }
+
+//    fun insertToCart(username: String, content: Content) {
+//        viewModelScope.launch {
+//            cartRepository.insertProduct(
+//                CartTable(
+//                    content.productCode,
+//                    content.name,
+//                    content.price,
+//                    content.currency,
+//                    content.discount,
+//                    content.dimension,
+//                    content.unit,
+//                    username,
+//                    "Pending"
+//                )
+//            )
+//        }
+//    }
 }

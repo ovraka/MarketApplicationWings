@@ -38,16 +38,4 @@ class ApiModule {
     @Singleton
     fun provideProductService(retrofit: Retrofit) = retrofit.create(ProductService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideDatabase(@ApplicationContext context: Context) = CartDatabase.getInstance(context)
-
-    @Provides
-    @Singleton
-    fun provideCartDao(cartDatabase: CartDatabase) = cartDatabase.cartDao()
-
-    @Provides
-    @Singleton
-    fun providesExecutor() = AppExecutors()
-
 }

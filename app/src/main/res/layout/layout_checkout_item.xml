@@ -5,10 +5,6 @@
     <data>
 
         <variable
-            name="onCart"
-            type="Boolean" />
-
-        <variable
             name="data"
             type="com.assignment.common.table.CartTable" />
     </data>
@@ -53,7 +49,6 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/total_quantity_background"
                 android:inputType="number"
-                android:minEms="1"
                 android:text="@string/_1"
                 android:textAlignment="center"
                 android:textAllCaps="false"

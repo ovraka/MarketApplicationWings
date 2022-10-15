@@ -4,17 +4,19 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.assignment.common.response.product.Content
 import com.assignment.marketapplicationwings.databinding.LayoutProductItemBinding
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
 import java.util.*
 
-class ProductAdapter(val navigateToProductDetail: (Content) -> Unit) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    val navigateToProductDetail: (Content) -> Unit,
+    val insertToCart: (Content) -> Unit
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     val listData = AsyncListDiffer<Content>(this, differ)
 
@@ -31,14 +33,29 @@ class ProductAdapter(val navigateToProductDetail: (Content) -> Unit) : RecyclerV
                 binding.price.text = currency.format(content.price)
             } else {
                 binding.discountPrice.text = currency.format(content.price)
-                binding.discountPrice.paintFlags= Paint.STRIKE_THRU_TEXT_FLAG
-                binding.price.text = currency.format((content.price - (content.price*content.discount/100)))
+                binding.discountPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                binding.price.text =
+                    currency.format((content.price - (content.price * content.discount / 100)))
             }
             binding.itemWrapper.setOnClickListener {
                 navigateToProductDetail(content)
             }
             binding.buyButton.setOnClickListener {
+                try {
+                    content?.let { it -> insertToCart(it) }
+                    Toast.makeText(
+                        binding.root.context,
+                        "Dimasukkan ke keranjang",
+                        1
+                    ).show()
 
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        binding.root.context,
+                        "Gagal dimasukkan ke keranjang",
+                        1
+                    ).show()
+                }
             }
         }
     }

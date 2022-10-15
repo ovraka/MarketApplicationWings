@@ -36,5 +36,9 @@ class ProductDetailFragment :
         binding.toolbar.back.setOnClickListener {
             vm.popBackStack()
         }
+
+        binding.buyButton.setOnClickListener {
+
+        }
     }
 }

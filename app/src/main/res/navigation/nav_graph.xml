@@ -26,6 +26,12 @@
         <action
             android:id="@+id/productToProductDetail"
             app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/productToCart"
+            app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/productToThrow"
+            app:destination="@id/throwFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -33,4 +39,12 @@
         android:label="ProductDetailFragment" >
         <argument android:name="product" app:argType="com.assignment.common.response.product.Content"/>
     </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.assignment.marketapplicationwings.fragment.CartFragment"
+        android:label="CartFragment" />
+    <fragment
+        android:id="@+id/throwFragment"
+        android:name="com.assignment.marketapplicationwings.fragment.ThrowFragment"
+        android:label="ThrowFragment" />
 </navigation>

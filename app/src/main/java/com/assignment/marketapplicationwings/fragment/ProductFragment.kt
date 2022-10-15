@@ -14,14 +14,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductFragment : BaseFragment<ProductViewModel, LayoutProductFragmentBinding>() {
     override val vm: ProductViewModel by viewModels()
     override val layoutResourceId: Int = R.layout.layout_product_fragment
-    private val adapter = ProductAdapter{
+    private val adapter = ProductAdapter({
         vm.navigate(ProductFragmentDirections.productToProductDetail(it))
+    }) { cart ->
+        vm.insertIntoCart(vm.userData.value.orEmpty(), cart)
+        vm.navigate(ProductFragmentDirections.productToThrow())
     }
+
 
     override fun initBinding(binding: LayoutProductFragmentBinding) {
         super.initBinding(binding)
         binding.recycler.adapter = adapter
-        vm.insertCart
         vm.productData.observe(viewLifecycleOwner) {
             when (it) {
                 is AppResponse.AppResponseSuccess ->
@@ -34,6 +37,8 @@ class ProductFragment : BaseFragment<ProductViewModel, LayoutProductFragmentBind
         vm.tokenData.observe(viewLifecycleOwner) {
             vm.getAllProduct(it)
         }
-
+        binding.checkout.setOnClickListener {
+            vm.navigate(ProductFragmentDirections.productToCart())
+        }
     }
 }

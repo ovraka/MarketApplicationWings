@@ -12,15 +12,21 @@ interface CartDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCart(cart: CartTable)
 
-    @Query("DELETE FROM cart WHERE status = 'pending' AND userId=:username AND productCode=:id")
-    fun deleteProductFromCart(id: Int, username: String)
+    @Query("SELECT * FROM cart WHERE user=:user")
+    fun getCart(user: String): LiveData<List<CartTable>>
 
-    @Query("SELECT * from cart WHERE status = 'pending' AND userId=:username ORDER BY id ASC")
-    fun getAllCart(username: String): LiveData<List<CartTable>>
+    @Query("DELETE FROM cart")
+    fun deleteCart():Unit
 
-    @Query("SELECT EXISTS(SELECT * FROM cart WHERE productCode = :id AND status ='pending' AND userId=:username)")
-    fun isProductExists(id: Int, username: String): Boolean
-
-    @Query("SELECT EXISTS(SELECT * FROM cart WHERE productCode = :id AND status = 'pending' AND userId=:username)")
-    fun isProductOnCart(id: Int, username: String): LiveData<Boolean>
+//    @Query("DELETE FROM cart WHERE status = 'pending' AND userId=:username AND productCode=:id")
+//    fun deleteProductFromCart(id: Int, username: String)
+//
+//    @Query("SELECT * from cart WHERE status = 'pending' AND userId=:username ORDER BY id ASC")
+//    fun getAllCart(username: String): LiveData<List<CartTable>>
+//
+//    @Query("SELECT EXISTS(SELECT * FROM cart WHERE productCode = :id AND status ='pending' AND userId=:username)")
+//    fun isProductExists(id: Int, username: String): Boolean
+//
+//    @Query("SELECT EXISTS(SELECT * FROM cart WHERE productCode = :id AND status = 'pending' AND userId=:username)")
+//    fun isProductOnCart(id: Int, username: String): LiveData<Boolean>
 }
