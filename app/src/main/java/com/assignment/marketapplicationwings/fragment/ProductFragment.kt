@@ -1,6 +1,7 @@
 package com.assignment.marketapplicationwings.fragment
 
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import com.assignment.common.ext.AppResponse
 import com.assignment.common.ext.BaseFragment
@@ -25,6 +26,7 @@ class ProductFragment : BaseFragment<ProductViewModel, LayoutProductFragmentBind
     override fun initBinding(binding: LayoutProductFragmentBinding) {
         super.initBinding(binding)
         binding.recycler.adapter = adapter
+        callback()
         vm.productData.observe(viewLifecycleOwner) {
             when (it) {
                 is AppResponse.AppResponseSuccess ->
@@ -35,10 +37,21 @@ class ProductFragment : BaseFragment<ProductViewModel, LayoutProductFragmentBind
             }
         }
         vm.tokenData.observe(viewLifecycleOwner) {
-            vm.getAllProduct(it)
+            if (it.isNullOrEmpty()) vm.getTokenData()
+            else vm.getAllProduct(it)
         }
         binding.checkout.setOnClickListener {
             vm.navigate(ProductFragmentDirections.productToCart())
         }
+    }
+
+    fun callback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                activity?.moveTaskToBack(true)
+                activity?.finish()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

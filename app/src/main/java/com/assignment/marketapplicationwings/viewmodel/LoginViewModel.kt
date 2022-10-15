@@ -3,6 +3,7 @@ package com.assignment.marketapplicationwings.viewmodel
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.assignment.api_service.DataStorePreference
 import com.assignment.api_service.use_case.LoginUseCase
 import com.assignment.common.ext.AppResponse
 import com.assignment.common.ext.BaseViewModel
@@ -15,9 +16,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    application: Application, val loginUseCase: LoginUseCase
+    application: Application, val loginUseCase: LoginUseCase,
+    val dataStorePreference: DataStorePreference
 ) : BaseViewModel(application) {
     val loginState = MutableLiveData<AppResponse<LoginResponse>>()
+    val checkToken = MutableLiveData<String>()
+
+    init {
+        viewModelScope.launch {
+            checkToken.postValue(dataStorePreference.getTokenString())
+        }
+    }
 
     fun getLoginData(username: String, password: String) {
         val loginData = LoginRequest(username, password)

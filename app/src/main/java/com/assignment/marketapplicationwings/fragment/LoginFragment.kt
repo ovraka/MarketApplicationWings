@@ -1,6 +1,7 @@
 package com.assignment.marketapplicationwings.fragment
 
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.assignment.common.ext.AppResponse
@@ -17,6 +18,11 @@ class LoginFragment : BaseFragment<LoginViewModel, LayoutLoginFragmentBinding>()
 
     override fun initBinding(binding: LayoutLoginFragmentBinding) {
         super.initBinding(binding)
+        vm.checkToken.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                vm.navigate(LoginFragmentDirections.loginToProduct())
+            }
+        }
         binding.toRegister.setOnClickListener {
             vm.navigate(LoginFragmentDirections.loginToRegister())
         }
@@ -30,7 +36,7 @@ class LoginFragment : BaseFragment<LoginViewModel, LayoutLoginFragmentBinding>()
             when (it) {
                 is AppResponse.AppResponseSuccess -> {
                     Toast.makeText(this.context, it.data.message, Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(LoginFragmentDirections.loginToProduct())
+                    vm.navigate(LoginFragmentDirections.loginToProduct())
                 }
                 is AppResponse.AppResponseLoading -> {
                     Toast.makeText(this.context, "Please wait", Toast.LENGTH_SHORT).show()

@@ -1,8 +1,10 @@
 package com.assignment.marketapplicationwings.fragment
 
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.assignment.common.ext.BaseFragment
+import com.assignment.common.table.CartTable
 import com.assignment.marketapplicationwings.R
 import com.assignment.marketapplicationwings.databinding.LayoutProductDetailFragmentBinding
 import com.assignment.marketapplicationwings.viewmodel.ProductDetailViewModel
@@ -38,7 +40,13 @@ class ProductDetailFragment :
         }
 
         binding.buyButton.setOnClickListener {
-
+            vm.insertIntoCart(vm.userData.value.orEmpty(), navArgs.product)
+            Toast.makeText(
+                binding.root.context,
+                "Dimasukkan ke keranjang",
+                1
+            ).show()
+            vm.popBackStack()
         }
     }
 }

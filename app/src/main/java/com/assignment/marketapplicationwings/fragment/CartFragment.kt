@@ -17,6 +17,7 @@ import java.util.zip.CheckedOutputStream
 class CartFragment: BaseFragment<CartViewModel, LayoutCheckoutFragmentBinding>() {
     override val vm: CartViewModel by viewModels()
     override val layoutResourceId: Int = R.layout.layout_checkout_fragment
+
     val locale = Locale("in", "ID")
     val currency = NumberFormat.getCurrencyInstance(locale)
     private val adapter = CartAdapter{
@@ -33,7 +34,7 @@ class CartFragment: BaseFragment<CartViewModel, LayoutCheckoutFragmentBinding>()
 
         binding.checkout.setOnClickListener {
             vm.deleteCart()
-            Toast.makeText(context, "Terimakasih product anda sedang dalam pengemasan", 1).show()
+            Toast.makeText(context, "Terimakasih pesanan anda sedang dalam pengemasan", 1).show()
             vm.popBackStack()
         }
         vm.cartData?.observe(viewLifecycleOwner) {

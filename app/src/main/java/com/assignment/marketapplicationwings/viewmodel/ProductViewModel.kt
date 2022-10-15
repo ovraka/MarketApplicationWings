@@ -28,12 +28,15 @@ class ProductViewModel @Inject constructor(
     val userData = MutableLiveData<String>()
 
     init {
+        getTokenData()
+    }
+
+    fun getTokenData() {
         viewModelScope.launch {
             tokenData.postValue(dataStorePreference.getTokenString())
             userData.postValue(dataStorePreference.getUserString())
         }
     }
-
     fun getAllProduct(token: String) {
         if (productData.value == null) {
             viewModelScope.launch {
