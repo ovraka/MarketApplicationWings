@@ -21,7 +21,6 @@ class CartFragment: BaseFragment<CartViewModel, LayoutCheckoutFragmentBinding>()
         binding.checkout.setOnClickListener {
             vm.deleteCart()
         }
-
         vm.cartData?.observe(viewLifecycleOwner) {
             adapter.differ.submitList(it)
         }
