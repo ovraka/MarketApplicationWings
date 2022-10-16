@@ -19,4 +19,7 @@
     <string name="_1">1</string>
     <string name="sub_total">Sub Total :</string>
     <string name="confirm">Confirm</string>
+    <string name="keranjang_kosong">Keranjang kosong...</string>
+    <string name="anda_belum_memasukkan_product_ke_dalam_keranjang">Anda belum memasukkan product ke dalam keranjang.</string>
+    <string name="kembali">Kembali</string>
 </resources>

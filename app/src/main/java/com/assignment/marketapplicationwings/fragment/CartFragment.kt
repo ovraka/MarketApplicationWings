@@ -1,13 +1,17 @@
 package com.assignment.marketapplicationwings.fragment
 
+import android.view.View
 import android.widget.Toast
 import androidx.core.view.isEmpty
+import androidx.core.widget.addTextChangedListener
+import androidx.databinding.adapters.VideoViewBindingAdapter
 import androidx.fragment.app.viewModels
 import com.assignment.common.ext.BaseFragment
 import com.assignment.common.ext.Count
 import com.assignment.marketapplicationwings.R
 import com.assignment.marketapplicationwings.adapter.CartAdapter
 import com.assignment.marketapplicationwings.databinding.LayoutCheckoutFragmentBinding
+
 import com.assignment.marketapplicationwings.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
@@ -52,6 +56,27 @@ class CartFragment: BaseFragment<CartViewModel, LayoutCheckoutFragmentBinding>()
 
             binding.totalPrice.text = currency.format(totalPrice)
         }
+        binding.totalPrice.addTextChangedListener {
+            if (vm.subTotal.isEmpty()) {
+                binding.textCart.visibility = View.VISIBLE
+                binding.kembali.visibility = View.VISIBLE
+                binding.title.visibility = View.GONE
+                binding.checkout.visibility = View.GONE
+                binding.totalPriceWrapper.visibility = View.GONE
+            } else {
+                binding.checkout.visibility = View.VISIBLE
+                binding.title.visibility = View.VISIBLE
+                binding.totalPriceWrapper.visibility = View.VISIBLE
+                binding.textCart.visibility = View.GONE
+                binding.kembali.visibility = View.GONE
+            }
 
+        }
+        binding.kembali.setOnClickListener {
+            vm.popBackStack()
+        }
+        binding.toolbar.back.setOnClickListener {
+            vm.popBackStack()
+        }
     }
 }
