@@ -35,14 +35,14 @@ class LoginFragment : BaseFragment<LoginViewModel, LayoutLoginFragmentBinding>()
         vm.loginState.observe(viewLifecycleOwner) {
             when (it) {
                 is AppResponse.AppResponseSuccess -> {
-                    Toast.makeText(this.context, it.data.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "Login berhasil", 1).show()
                     vm.navigate(LoginFragmentDirections.loginToProduct())
                 }
                 is AppResponse.AppResponseLoading -> {
-                    Toast.makeText(this.context, "Please wait", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "Mohon menunggu", 1).show()
                 }
                 else -> {
-                    Toast.makeText(this.context, "Cannot connect because not same port", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "IP Address Client tidak sama dengan server", 1).show()
                 }
             }
         }

@@ -6,11 +6,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.assignment.common.table.CartTable
+import com.assignment.common.table.TransactionDetailTable
+import com.assignment.common.table.TransactionHeaderTable
 
 @Dao
 interface CartDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCart(cart: CartTable)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertTransactionHeader(transactionHeaderTable: TransactionHeaderTable)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertTransactionDetail(transactionDetailTable: List<TransactionDetailTable>)
 
     @Query("SELECT * FROM cart WHERE user=:user")
     fun getCart(user: String): LiveData<List<CartTable>>

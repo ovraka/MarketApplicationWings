@@ -20,8 +20,11 @@ class CartAdapter(val setTotalPrice: (CartTable) -> Unit) : RecyclerView.Adapter
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CartTable) {
             binding.data = data
+
             binding.remove.isEnabled = false
+
             binding.itemQuantity.setText("1")
+
             val locale = Locale("in", "ID")
             val currency = NumberFormat.getCurrencyInstance(locale)
             binding.subTotal.text = currency.format(Count.getSubTotal(data))

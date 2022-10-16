@@ -28,7 +28,7 @@ object RetrofitClient {
                     .showNotification(true)).build()
         return Retrofit.Builder()
             .client(client)
-            .baseUrl("http://192.168.109.141:3000/marketApplication/api/")
+            .baseUrl("http://10.236.192.110:3000/marketApplication/api/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
     }

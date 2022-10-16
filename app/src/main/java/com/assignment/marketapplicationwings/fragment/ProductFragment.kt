@@ -33,7 +33,7 @@ class ProductFragment : BaseFragment<ProductViewModel, LayoutProductFragmentBind
                     adapter.listData.submitList(it.data.content)
 
                 is AppResponse.AppResponseError ->
-                    Toast.makeText(this.context, "Failed load", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "Failed load data", Toast.LENGTH_SHORT).show()
             }
         }
         vm.tokenData.observe(viewLifecycleOwner) {

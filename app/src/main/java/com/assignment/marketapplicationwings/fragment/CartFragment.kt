@@ -1,6 +1,7 @@
 package com.assignment.marketapplicationwings.fragment
 
 import android.widget.Toast
+import androidx.core.view.isEmpty
 import androidx.fragment.app.viewModels
 import com.assignment.common.ext.BaseFragment
 import com.assignment.common.ext.Count
@@ -20,6 +21,7 @@ class CartFragment: BaseFragment<CartViewModel, LayoutCheckoutFragmentBinding>()
 
     val locale = Locale("in", "ID")
     val currency = NumberFormat.getCurrencyInstance(locale)
+
     private val adapter = CartAdapter{
         vm.subTotal[it.productCode] = it
         val total = vm.subTotal.map {
@@ -33,9 +35,10 @@ class CartFragment: BaseFragment<CartViewModel, LayoutCheckoutFragmentBinding>()
         binding.recycler.adapter = adapter
 
         binding.checkout.setOnClickListener {
-            vm.deleteCart()
-            Toast.makeText(context, "Terimakasih pesanan anda sedang dalam pengemasan", 1).show()
-            vm.popBackStack()
+                vm.insertTransaction(vm.userData.value.orEmpty())
+                vm.deleteCart()
+                Toast.makeText(context, "Terimakasih pesanan anda sedang dalam proses", 1).show()
+                vm.popBackStack()
         }
         vm.cartData?.observe(viewLifecycleOwner) {
             adapter.differ.submitList(it)

@@ -6,8 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.assignment.api_service.service.CartDAO
 import com.assignment.common.table.CartTable
+import com.assignment.common.table.TransactionDetailTable
+import com.assignment.common.table.TransactionHeaderTable
 
-@Database(entities = [CartTable::class], version = 1, exportSchema = false)
+@Database(entities = [CartTable::class, TransactionHeaderTable::class, TransactionDetailTable::class], version = 1, exportSchema = false)
 abstract class CartDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDAO
 
