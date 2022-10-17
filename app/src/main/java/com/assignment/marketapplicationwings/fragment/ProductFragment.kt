@@ -36,6 +36,9 @@ class ProductFragment : BaseFragment<ProductViewModel, LayoutProductFragmentBind
                     Toast.makeText(this.context, "Failed load data", Toast.LENGTH_SHORT).show()
             }
         }
+        vm.userData.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) vm.getTokenData()
+        }
         vm.tokenData.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) vm.getTokenData()
             else vm.getAllProduct(it)
